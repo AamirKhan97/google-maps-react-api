@@ -17,6 +17,50 @@ const Map = (props) => {
   const { isLoaded } = props;
   const [isClciked, setIsClciked] = useState(null);
   console.log(isClciked);
+  const darkTheme = [
+    {
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      featureType: "administrative",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    // Add more rules based on your preferences
+  ];
 
   const locations = [
     {
@@ -66,6 +110,9 @@ const Map = (props) => {
         {locations.map((marker) => {
           return (
             <Marker
+              defaultZoom={10}
+              defaultCenter={{ lat: 19.076, lng: 72.8777 }}
+              // options={{}}
               key={marker.name}
               position={marker.location}
               options={{
@@ -79,6 +126,12 @@ const Map = (props) => {
                     : marker.status == "whatever"
                     ? purple
                     : null,
+                styles: darkTheme, // Apply custom styles here
+                mapTypeId: "roadmap", // You can switch to other types like 'satellite'
+                zoomControl: true, // Optional: customize zoom control
+                fullscreenControl: true, // Optional: customize fullscreen control
+                streetViewControl: true, // Toggle street view control
+                mapTypeControl: true, // Show or hide map type selector
               }}
               onClick={() => setIsClciked(marker)}
             />
@@ -99,6 +152,7 @@ const Map = (props) => {
             </div>
           </InfoWindow>
         )}
+        <Marker position={{ lat: 19.076, lng: 72.8777 }} />
       </GoogleMap>
     </>
   ) : (
